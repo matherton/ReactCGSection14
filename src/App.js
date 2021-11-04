@@ -32,6 +32,10 @@ function App() {
       const response = await fetch("https://swapi.dev/api/film/");
       const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error("No response from API - something went wrong!");
+      }
+
       const transformedMovies = data.results.map((movieData) => {
         return {
           id: movieData.episode_id,
@@ -42,7 +46,9 @@ function App() {
       });
       setMovies(transformedMovies);
       setIsLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
