@@ -6,6 +6,7 @@ import "./App.css";
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   /*function fetchMoviesHandler() {
     fetch("https://swapi.dev/api/films/")
@@ -26,7 +27,8 @@ function App() {
   }*/ //is same as shorthand:
   async function fetchMoviesHandler() {
     setIsLoading(true);
-    const response = await fetch("https://swapi.dev/api/films/");
+    setError(null);
+    const response = await fetch("https://swapi.dev/api/film/");
     const data = await response.json();
 
     const transformedMovies = data.results.map((movieData) => {
