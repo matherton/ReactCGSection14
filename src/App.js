@@ -25,7 +25,7 @@ function App() {
       });
   }*/ //is same as shorthand:
   async function fetchMoviesHandler() {
-    isLoading(true);
+    setIsLoading(true);
     const response = await fetch("https://swapi.dev/api/films/");
     const data = await response.json();
 
