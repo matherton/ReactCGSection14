@@ -21,6 +21,7 @@ function App() {
       }
 
       const data = await response.json();
+      console.log(data);
 
       const transformedMovies = data.results.map((movieData) => {
         return {
