@@ -1,38 +1,21 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
 
-import MoviesList from "./components/MoviesList";
-import "./App.css";
+import MoviesList from './components/MoviesList';
+import AddMovie from './components/AddMovie';
+import './App.css';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  /*function fetchMoviesHandler() {
-    fetch("https://swapi.dev/api/films/")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const transformedMovies = data.results.map((filmData) => {
-          return {
-            id: filmData.episode_id,
-            title: filmData.title,
-            openingText: filmData.opening_crawl,
-            releaseDate: filmData.release_date,
-          };
-        });
-        setMovies(transformedMovies);
-      });
-  }*/ //is same as shorthand:
   const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
-
+      const response = await fetch('https://swapi.dev/api/films/');
       if (!response.ok) {
-        throw new Error("No response from API - something went wrong!");
+        throw new Error('Something went wrong!');
       }
 
       const data = await response.json();
@@ -56,14 +39,14 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
-  let content = <p>No movies found!</p>;
+  function addMovieHandler(movie) {
+    console.log(movie);
+  }
+
+  let content = <p>Found no movies.</p>;
 
   if (movies.length > 0) {
     content = <MoviesList movies={movies} />;
-  }
-
-  if (movies.length === 0) {
-    content = <p>No movies found!</p>;
   }
 
   if (error) {
@@ -76,6 +59,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
